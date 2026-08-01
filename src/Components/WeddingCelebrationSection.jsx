@@ -10,18 +10,18 @@ const WeddingCelebrationSection = () => {
     useEffect(() => {
         const updateDimensions = () => {
             const screenWidth = window.innerWidth;
-            
+
             if (screenWidth >= 1024) {
-                // Desktop: larger size
-                setImageSize(700);
+                // Desktop: slightly larger size
+                setImageSize(760);
                 setIsDesktop(true);
             } else if (screenWidth >= 768) {
-                // Tablet: medium size
-                setImageSize(400);
+                // Tablet: slightly larger size
+                setImageSize(440);
                 setIsDesktop(false);
             } else {
-                // Mobile: smaller size
-                setImageSize(280);
+                // Mobile: slightly larger size
+                setImageSize(320);
                 setIsDesktop(false);
             }
         };

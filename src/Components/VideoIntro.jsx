@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
-import introVideo from '../assets/video/Video_Project_3_202608011641.mp4';
+import React, { useRef, useState } from 'react';
+import introVideo from '../assets/video/watermark-removed-VID-20260801-WA0038.mp4';
 
 const VideoIntro = ({ onVideoEnd }) => {
     const videoRef = useRef(null);
@@ -18,8 +18,7 @@ const VideoIntro = ({ onVideoEnd }) => {
             const duration = videoRef.current.duration;
             const currentTime = videoRef.current.currentTime;
             const timeRemaining = duration - currentTime;
-            
-            // Reveal hero 2 seconds before video ends
+
             if (timeRemaining <= 2 && timeRemaining > 0) {
                 setHeroRevealed(true);
                 onVideoEnd();
@@ -28,21 +27,21 @@ const VideoIntro = ({ onVideoEnd }) => {
     };
 
     const handleVideoEnd = () => {
-        // Video completely finished, fade out video overlay
+        setHeroRevealed(true);
+        onVideoEnd();
     };
 
     return (
-        <div 
+        <div
             className={`fixed inset-0 z-[100] bg-black flex items-center justify-center cursor-pointer transition-opacity duration-1000 ${heroRevealed ? 'opacity-0 pointer-events-none' : ''}`}
             onClick={!isPlaying ? handleClick : undefined}
             style={{ width: '100vw', height: '100vh' }}
         >
-            {/* Video Element */}
             <video
                 ref={videoRef}
                 src={introVideo}
                 className="object-cover md:object-contain"
-                style={{ 
+                style={{
                     position: 'absolute',
                     top: 0,
                     left: 0,
@@ -53,11 +52,15 @@ const VideoIntro = ({ onVideoEnd }) => {
                 onTimeUpdate={handleTimeUpdate}
                 onEnded={handleVideoEnd}
                 playsInline
+                muted
             />
-            
-            {/* Click to Play Indicator */}
+
+            <div className="pointer-events-none absolute inset-x-0 bottom-8 z-20 text-center text-white/70 text-[10px] tracking-[0.6em] uppercase opacity-60">
+                Wedding Invitation
+            </div>
+
             {!isPlaying && (
-                <div className="relative z-10 text-white text-center px-4">
+                <div className="relative z-30 text-white text-center px-4">
                     <p className="text-xl md:text-2xl lg:text-3xl tracking-widest font-heading">Click here to enter</p>
                 </div>
             )}
