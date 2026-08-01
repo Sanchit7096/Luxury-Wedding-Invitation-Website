@@ -1,10 +1,9 @@
 import React, { useRef, useState } from 'react';
 import introVideo from '../assets/video/watermark-removed-VID-20260801-WA0038.mp4';
 
-const VideoIntro = ({ onVideoEnd }) => {
+const VideoIntro = ({ onVideoEnd, isClosing }) => {
     const videoRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [heroRevealed, setHeroRevealed] = useState(false);
 
     const handleClick = () => {
         if (videoRef.current) {
@@ -13,27 +12,13 @@ const VideoIntro = ({ onVideoEnd }) => {
         }
     };
 
-    const handleTimeUpdate = () => {
-        if (videoRef.current && !heroRevealed) {
-            const duration = videoRef.current.duration;
-            const currentTime = videoRef.current.currentTime;
-            const timeRemaining = duration - currentTime;
-
-            if (timeRemaining <= 2 && timeRemaining > 0) {
-                setHeroRevealed(true);
-                onVideoEnd();
-            }
-        }
-    };
-
     const handleVideoEnd = () => {
-        setHeroRevealed(true);
         onVideoEnd();
     };
 
     return (
         <div
-            className={`fixed inset-0 z-[100] bg-black flex items-center justify-center cursor-pointer transition-opacity duration-1000 ${heroRevealed ? 'opacity-0 pointer-events-none' : ''}`}
+            className={`fixed inset-0 z-[100] bg-black flex items-center justify-center cursor-pointer transition-opacity duration-1000 ${isClosing ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
             onClick={!isPlaying ? handleClick : undefined}
             style={{ width: '100vw', height: '100vh' }}
         >
@@ -49,7 +34,6 @@ const VideoIntro = ({ onVideoEnd }) => {
                     height: '100%',
                     backgroundColor: '#000'
                 }}
-                onTimeUpdate={handleTimeUpdate}
                 onEnded={handleVideoEnd}
                 playsInline
                 muted

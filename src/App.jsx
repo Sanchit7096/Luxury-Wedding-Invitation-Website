@@ -11,14 +11,18 @@ import MusicPlayer from './Components/MusicPlayer'
 
 const App = () => {
   const [showVideo, setShowVideo] = useState(true)
+  const [isVideoClosing, setIsVideoClosing] = useState(false)
 
   const handleVideoEnd = () => {
-    setShowVideo(false)
+    setIsVideoClosing(true)
+    setTimeout(() => {
+      setShowVideo(false)
+    }, 1200)
   }
 
   return (
     <div>
-      {showVideo && <VideoIntro onVideoEnd={handleVideoEnd} />}
+      {showVideo && <VideoIntro onVideoEnd={handleVideoEnd} isClosing={isVideoClosing} />}
       {!showVideo && <FallingFlowers />}
       {!showVideo && <Hero />}
       {!showVideo && <ScratchCardSection />}
