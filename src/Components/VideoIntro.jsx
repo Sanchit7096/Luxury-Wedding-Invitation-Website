@@ -1,0 +1,68 @@
+import React, { useRef, useState, useEffect } from 'react';
+import introVideo from '../assets/video/Video_Project_3_202608011641.mp4';
+
+const VideoIntro = ({ onVideoEnd }) => {
+    const videoRef = useRef(null);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [heroRevealed, setHeroRevealed] = useState(false);
+
+    const handleClick = () => {
+        if (videoRef.current) {
+            videoRef.current.play();
+            setIsPlaying(true);
+        }
+    };
+
+    const handleTimeUpdate = () => {
+        if (videoRef.current && !heroRevealed) {
+            const duration = videoRef.current.duration;
+            const currentTime = videoRef.current.currentTime;
+            const timeRemaining = duration - currentTime;
+            
+            // Reveal hero 2 seconds before video ends
+            if (timeRemaining <= 2 && timeRemaining > 0) {
+                setHeroRevealed(true);
+                onVideoEnd();
+            }
+        }
+    };
+
+    const handleVideoEnd = () => {
+        // Video completely finished, fade out video overlay
+    };
+
+    return (
+        <div 
+            className={`fixed inset-0 z-[100] bg-black flex items-center justify-center cursor-pointer transition-opacity duration-1000 ${heroRevealed ? 'opacity-0 pointer-events-none' : ''}`}
+            onClick={!isPlaying ? handleClick : undefined}
+            style={{ width: '100vw', height: '100vh' }}
+        >
+            {/* Video Element */}
+            <video
+                ref={videoRef}
+                src={introVideo}
+                className="object-cover md:object-contain"
+                style={{ 
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: '#000'
+                }}
+                onTimeUpdate={handleTimeUpdate}
+                onEnded={handleVideoEnd}
+                playsInline
+            />
+            
+            {/* Click to Play Indicator */}
+            {!isPlaying && (
+                <div className="relative z-10 text-white text-center px-4">
+                    <p className="text-xl md:text-2xl lg:text-3xl tracking-widest font-heading">Click here to enter</p>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default VideoIntro;
