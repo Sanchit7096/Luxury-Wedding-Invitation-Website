@@ -78,11 +78,8 @@ const ScratchCardSection = () => {
                 initial={{ y: 20, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
-                className="relative shadow-[0_20px_50px_rgba(0,0,0,0.15)] cursor-crosshair group touch-none"
+                className="relative shadow-[0_20px_50px_rgba(0,0,0,0.15)] cursor-crosshair group"
                 style={{ width: dimensions.width, height: dimensions.height }}
-                onTouchStart={(e) => e.stopPropagation()}
-                onTouchMove={(e) => e.stopPropagation()}
-                onTouchEnd={(e) => e.stopPropagation()}
             >
                 <svg
                     width={dimensions.width}
