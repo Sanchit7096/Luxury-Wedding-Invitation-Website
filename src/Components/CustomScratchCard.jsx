@@ -66,7 +66,8 @@ const CustomScratchCard = ({ width, height, image, finishPercent, onComplete, br
     };
 
     const handleStart = (e) => {
-        if (e.cancelable) e.preventDefault();
+        e.preventDefault();
+        e.stopPropagation();
         setIsDrawing(true);
         const { x, y } = getMousePos(e);
         scratch(x, y);
@@ -74,12 +75,15 @@ const CustomScratchCard = ({ width, height, image, finishPercent, onComplete, br
 
     const handleMove = (e) => {
         if (!isDrawing || completed) return;
-        if (e.cancelable) e.preventDefault();
+        e.preventDefault();
+        e.stopPropagation();
         const { x, y } = getMousePos(e);
         scratch(x, y);
     };
 
-    const handleEnd = () => {
+    const handleEnd = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         setIsDrawing(false);
     };
 
@@ -95,7 +99,8 @@ const CustomScratchCard = ({ width, height, image, finishPercent, onComplete, br
             onTouchStart={handleStart}
             onTouchMove={handleMove}
             onTouchEnd={handleEnd}
-            className="block touch-none cursor-crosshair"
+            style={{ touchAction: 'none' }}
+            className="block cursor-crosshair"
         />
     );
 };
