@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import introVideo from '../assets/video/watermark-removed-VID-20260801-WA0038.mp4';
 
-const VideoIntro = ({ onVideoEnd, isClosing }) => {
+const VideoIntro = ({ onVideoStart, onVideoEnd, isClosing }) => {
     const videoRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
 
@@ -9,6 +9,9 @@ const VideoIntro = ({ onVideoEnd, isClosing }) => {
         if (videoRef.current) {
             videoRef.current.play();
             setIsPlaying(true);
+            if (onVideoStart) {
+                onVideoStart();
+            }
         }
     };
 
@@ -36,7 +39,6 @@ const VideoIntro = ({ onVideoEnd, isClosing }) => {
                 }}
                 onEnded={handleVideoEnd}
                 playsInline
-                muted
             />
 
             <div className="pointer-events-none absolute inset-x-0 bottom-8 z-20 text-center text-white/70 text-[10px] tracking-[0.6em] uppercase opacity-60">

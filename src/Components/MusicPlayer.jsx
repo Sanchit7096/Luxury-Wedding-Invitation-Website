@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Music, Volume2, VolumeX } from 'lucide-react';
 import weddingMusic from '../assets/music/WhatsApp Audio 2026-08-01 at 3.54.34 PM.mpeg';
 
-const MusicPlayer = ({ isOpened }) => {
+const MusicPlayer = ({ isOpened, showIcon }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
 
@@ -11,7 +11,7 @@ const MusicPlayer = ({ isOpened }) => {
 
     useEffect(() => {
         if (isOpened && !isPlaying && audioUrl) {
-            // Browsers allow autoplay if there's a user interaction (like clicking the envelope)
+            // Browsers allow autoplay if there's a user interaction (like clicking the video)
             const playAudio = async () => {
                 try {
                     await audioRef.current.play();
@@ -42,7 +42,7 @@ const MusicPlayer = ({ isOpened }) => {
             </audio>
 
             <AnimatePresence>
-                {isOpened && (
+                {showIcon && (
                     <motion.button
                         initial={{ scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}

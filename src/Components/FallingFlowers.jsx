@@ -4,6 +4,14 @@ import confetti from 'canvas-confetti';
 const FallingFlowers = () => {
     useEffect(() => {
         const colors = ['#D4AF37', '#B71C1C', '#FF69B4', '#FFB6C1', '#FF1493', '#FF6347', '#FFA07A'];
+        
+        // Detect if mobile device
+        const isMobile = window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        // Reduce particle count and interval for mobile
+        const initialCount = isMobile ? 8 : 20;
+        const intervalTime = isMobile ? 600 : 300;
+        const particleTicks = isMobile ? 100 : 200;
 
         const randomInRange = (min, max) => Math.random() * (max - min) + min;
 
@@ -21,20 +29,21 @@ const FallingFlowers = () => {
                 gravity: 2,
                 startVelocity: randomInRange(10, 30),
                 spread: 0,
-                ticks: 200,
+                ticks: particleTicks,
                 zIndex: 1000,
+                disableForReducedMotion: true,
             });
         };
 
         // Create initial burst
-        for (let i = 0; i < 20; i++) {
-            setTimeout(() => createFallingElement(), i * 100);
+        for (let i = 0; i < initialCount; i++) {
+            setTimeout(() => createFallingElement(), i * (isMobile ? 200 : 100));
         }
 
         // Continue creating falling elements continuously
         let interval = setInterval(() => {
             createFallingElement();
-        }, 300);
+        }, intervalTime);
 
         return () => clearInterval(interval);
     }, []);

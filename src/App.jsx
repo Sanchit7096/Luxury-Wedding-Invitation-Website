@@ -12,6 +12,8 @@ import MusicPlayer from './Components/MusicPlayer'
 const App = () => {
   const [showVideo, setShowVideo] = useState(true)
   const [isVideoClosing, setIsVideoClosing] = useState(false)
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false)
+  const [showMusicPlayer, setShowMusicPlayer] = useState(false)
   const [showHero, setShowHero] = useState(false)
   const [showScratch, setShowScratch] = useState(false)
   const [showInvitation, setShowInvitation] = useState(false)
@@ -19,8 +21,13 @@ const App = () => {
   const [showRegards, setShowRegards] = useState(false)
   const [showFlowers, setShowFlowers] = useState(false)
 
+  const handleVideoStart = () => {
+    setIsVideoPlaying(true)
+  }
+
   const handleVideoEnd = () => {
     setIsVideoClosing(true)
+    setShowMusicPlayer(true)
     
     // Start showing sections sequentially after video starts closing
     setTimeout(() => {
@@ -54,14 +61,14 @@ const App = () => {
 
   return (
     <div>
-      {showVideo && <VideoIntro onVideoEnd={handleVideoEnd} isClosing={isVideoClosing} />}
+      {showVideo && <VideoIntro onVideoStart={handleVideoStart} onVideoEnd={handleVideoEnd} isClosing={isVideoClosing} />}
       {showFlowers && <div className="animate-fade-in"><FallingFlowers /></div>}
       {showHero && <div className="animate-fade-in"><Hero /></div>}
       {showScratch && <div className="animate-fade-in"><ScratchCardSection /></div>}
       {showInvitation && <div className="animate-fade-in"><WeddingInvitationSection /></div>}
       {showCelebration && <div className="animate-fade-in"><WeddingCelebrationSection /></div>}
       {showRegards && <div className="animate-fade-in"><WarmRegardsSection /></div>}
-      <MusicPlayer isOpened={!showVideo} />
+      <MusicPlayer isOpened={isVideoPlaying} showIcon={showMusicPlayer} />
     </div>
   )
 }
