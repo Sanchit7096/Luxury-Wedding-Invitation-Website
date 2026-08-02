@@ -33,15 +33,7 @@ const CustomScratchCard = ({ width, height, image, finishPercent, onComplete, br
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         ctx.beginPath();
-        
-        // Draw heart shape
-        const size = brushSize;
-        ctx.moveTo(x, y + size / 4);
-        ctx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + size / 4);
-        ctx.bezierCurveTo(x - size / 2, y + size / 2, x, y + size * 0.75, x, y + size);
-        ctx.bezierCurveTo(x, y + size * 0.75, x + size / 2, y + size / 2, x + size / 2, y + size / 4);
-        ctx.bezierCurveTo(x + size / 2, y, x, y, x, y + size / 4);
-        
+        ctx.arc(x, y, brushSize, 0, Math.PI * 2);
         ctx.fill();
         checkScratchPercentage();
     };
@@ -73,7 +65,7 @@ const CustomScratchCard = ({ width, height, image, finishPercent, onComplete, br
 
     const handleMove = (e) => {
         if (!isDrawing || completed) return;
-        if (e.cancelable) e.preventDefault();
+        e.preventDefault();
         const { x, y } = getMousePos(e);
         scratch(x, y);
     };
@@ -94,7 +86,7 @@ const CustomScratchCard = ({ width, height, image, finishPercent, onComplete, br
             onTouchStart={handleStart}
             onTouchMove={handleMove}
             onTouchEnd={handleEnd}
-            className="block cursor-crosshair"
+            className="block touch-none cursor-crosshair"
         />
     );
 };
