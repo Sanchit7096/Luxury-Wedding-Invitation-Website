@@ -24,13 +24,21 @@ const Hero = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <div className="text-black text-sm md:text-base lg:text-lg tracking-[0.3em] uppercase font-heading mt-140 font-bold" 
+        <div className="text-black text-4xl md:text-5xl lg:text-6xl tracking-[0.3em] uppercase font-heading mt-140 font-bold" 
              style={{ 
                textShadow: '0 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.5)',
                padding: '8px 16px',
                borderRadius: '4px'
              }}>
-          Scroll Down
+          Demo website for wedding
+        </div>
+        <div className="text-black text-4xl md:text-5xl lg:text-6xl tracking-[0.3em] uppercase font-heading mt-140 font-bold" 
+             style={{ 
+               textShadow: '0 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.5)',
+               padding: '8px 16px',
+               borderRadius: '4px'
+             }}>
+          Demo website for wedding
         </div>
         <motion.div
           className="w-6 h-10 mx-auto border-2 border-white/50 rounded-full flex justify-center pt-2"
